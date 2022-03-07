@@ -1,8 +1,8 @@
 abstract class Cell { 
-  int nutrition;
+  float nutrition;
   int species;
 
-  public Cell(int nutrition, int species) {
+  public Cell(float nutrition, int species) {
     this.nutrition = nutrition;
     this.species = species;
   }
@@ -18,7 +18,7 @@ abstract class Cell {
 }
 
 // Used to fill by linearly interpolating between two different colors
-void lerpFill(int r1, int g1, int b1, int r2, int g2, int b2, int nutrition) {
+void lerpFill(int r1, int g1, int b1, int r2, int g2, int b2, float nutrition) {
   float x = min(1, nutrition * 0.01);
   
   float r = (r2 - r1) * x + r1;
@@ -28,7 +28,7 @@ void lerpFill(int r1, int g1, int b1, int r2, int g2, int b2, int nutrition) {
 }
 
 class YoungPlantCell extends Cell {
-  public YoungPlantCell(int nutrition, int species) {
+  public YoungPlantCell(float nutrition, int species) {
     super(nutrition, species);
   }
 
@@ -43,7 +43,7 @@ class YoungPlantCell extends Cell {
 }
 
 class OldPlantCell extends Cell {
-  public OldPlantCell(int nutrition, int species) {
+  public OldPlantCell(float nutrition, int species) {
     super(nutrition, species);
   }
 
@@ -60,7 +60,7 @@ class OldPlantCell extends Cell {
 class DeadPlantCell extends Cell {
   int decompositionTime;
 
-  public DeadPlantCell(int nutrition, int decompositionTime) {
+  public DeadPlantCell(float nutrition, int decompositionTime) {
     super(nutrition, 0);
     this.decompositionTime = decompositionTime;
   }
@@ -76,7 +76,7 @@ class DeadPlantCell extends Cell {
 }
 
 class RootCell extends Cell {
-  public RootCell(int nutrition, int species) {
+  public RootCell(float nutrition, int species) {
     super(nutrition, species);
   }
 
@@ -91,7 +91,7 @@ class RootCell extends Cell {
 }
 
 class FlowerCell extends Cell {
-  public FlowerCell(int nutrition, int species) {
+  public FlowerCell(float nutrition, int species) {
     super(nutrition, species);
   }
 
@@ -106,7 +106,7 @@ class FlowerCell extends Cell {
 }
 
 class PetalCell extends Cell {
-  public PetalCell(int nutrition, int species) {
+  public PetalCell(float nutrition, int species) {
     super(nutrition, species);
   }
 
@@ -154,7 +154,7 @@ class SeedCell extends Cell {
 }
 
 class SoilCell extends Cell {
-  public SoilCell(int nutrition) {
+  public SoilCell(float nutrition) {
     super(nutrition, 0);
   }
 

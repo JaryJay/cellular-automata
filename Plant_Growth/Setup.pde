@@ -2,7 +2,7 @@ void oneSeedConfiguration() {
   for (int y=0; y < heightInCells; y++) {
     for (int x=0; x < widthInCells; x++) {
       if (y >= heightInCells - 30) {
-        cells[y][x] = new SoilCell(10 + round(random(40)));
+        cells[y][x] = new SoilCell(50 + round(random(40)));
       }
     }
   }

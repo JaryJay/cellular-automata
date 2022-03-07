@@ -1,3 +1,11 @@
+// Parameters
+final float GROWTH_FACTOR = 0.3;
+final float SPROUTING_PROBABILITY = 0.02;
+final float PHOTOSYNTHESIS_SPEED = 0.1;
+
+final float SEED_SPROUT_INITIAL_NUTRITION = 100;
+
+// Visual parameters
 int widthInCells = 300;
 int heightInCells = 180;
 int cellSize = 5;
@@ -13,7 +21,8 @@ void setup() {
   cells = new Cell[heightInCells][widthInCells];
   cellsNext = new Cell[heightInCells][widthInCells];
   noStroke();
-  flyingDirtConfiguration(0.3);
+  //flyingDirtConfiguration(0.3);
+  oneSeedConfiguration();
 }
 
 void draw() {
