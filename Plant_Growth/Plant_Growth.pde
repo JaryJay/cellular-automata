@@ -20,6 +20,13 @@ void draw() {
   background(129, 180, 240);
   drawCells();
   gravityAndGrowth();
+
+
+  for (int y = 0; y < heightInCells; y++) {
+    for (int x = 0; x < widthInCells; x++) {
+      cells[y][x] = cellsNext[y][x];
+    }
+  }
 }
 
 void drawCells() {
@@ -31,7 +38,7 @@ void drawCells() {
       }
     }
   }
-}  
+}
 
 void gravityAndGrowth() {
   for (int y = 0; y < heightInCells; y++) {
@@ -45,7 +52,7 @@ void gravityAndGrowth() {
           cellsNext[y][x] = cells[y-1][x];
           cellsNext[y-1][x] = null;
         }
-      } 
+      }
     }
   }
 }
