@@ -18,7 +18,8 @@ class YoungPlantCell extends Cell {
   }
 
   void display(int x, int y) {
-    rect(0, 0, 0, 0);
+    lerpFill(216, 223, 186, 143, 196, 0, nutrition);
+    rect(x * cellSize, y * cellSize, cellSize, cellSize);
   }
 
   String type() {
@@ -32,7 +33,8 @@ class OldPlantCell extends Cell {
   }
 
   void display(int x, int y) {
-    rect(0, 0, 0, 0);
+    lerpFill(96, 124, 92, 19, 156, 0, nutrition);
+    rect(x * cellSize, y * cellSize, cellSize, cellSize);
   }
 
   String type() {
@@ -45,10 +47,12 @@ class DeadPlantCell extends Cell {
 
   public DeadPlantCell(int nutrition, int decompositionTime) {
     super(nutrition, 0);
+    this.decompositionTime = decompositionTime;
   }
 
   void display(int x, int y) {
-    rect(0, 0, 0, 0);
+    lerpFill(142, 155, 140, 61, 45, 11, nutrition);
+    rect(x * cellSize, y * cellSize, cellSize, cellSize);
   }
 
   String type() {
@@ -62,7 +66,8 @@ class RootCell extends Cell {
   }
 
   void display(int x, int y) {
-    rect(0, 0, 0, 0);
+    lerpFill(209, 201, 164, 228, 206, 132, nutrition);
+    rect(x * cellSize, y * cellSize, cellSize, cellSize);
   }
 
   String type() {
@@ -76,7 +81,8 @@ class FlowerCell extends Cell {
   }
 
   void display(int x, int y) {
-    rect(0, 0, 0, 0);
+    fill(255, 222, 175); 
+    rect(x * cellSize, y * cellSize, cellSize, cellSize);
   }
 
   String type() {
@@ -90,7 +96,17 @@ class PetalCell extends Cell {
   }
 
   void display(int x, int y) {
-    rect(0, 0, 0, 0);
+    if (species == 0)
+      fill(243, 243, 243);
+    else if (species == 1)
+      fill(153, 0, 255);
+    else if (species == 2)
+      fill(210, 173, 249);
+    else if (species == 3)
+      fill(251, 255, 12);
+    else
+      fill(255, 193, 119);  
+    rect(x * cellSize, y * cellSize, cellSize, cellSize);
   }
 
   String type() {
@@ -104,7 +120,17 @@ class SeedCell extends Cell {
   }
 
   void display(int x, int y) {
-    rect(0, 0, 0, 0);
+    if (species == 0)
+      fill(107, 86, 62);
+    else if (species == 1)
+      fill(152, 105, 4);
+    else if (species == 2)
+      fill(112, 119, 34);
+    else if (species == 3)
+      fill(122, 113, 59);
+    else
+      fill(148, 89, 41);
+    rect(x * cellSize, y * cellSize, cellSize, cellSize);
   }
 
   String type() {
@@ -118,7 +144,8 @@ class SoilCell extends Cell {
   }
 
   void display(int x, int y) {
-    rect(0, 0, 0, 0);
+    lerpFill(255, 235, 175, 48, 40, 6, nutrition);
+    rect(x * cellSize, y * cellSize, cellSize, cellSize);
   }
 
   String type() {

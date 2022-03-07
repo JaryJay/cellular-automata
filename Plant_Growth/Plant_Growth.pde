@@ -11,7 +11,8 @@ void settings() {
 
 void setup() {
   cells = new Cell[heightInCells][widthInCells];
-  oneSeedConfiguration();
+  noStroke();
+  flyingDirtConfiguration(0.3);
 }
 
 void draw() {
