@@ -1,9 +1,9 @@
 // Parameters
-final float GROWTH_FACTOR = 0.1;
+final float GROWTH_FACTOR = 0.04;
 final float ROOT_GROWTH_FACTOR = 0.008;
 final float SPROUTING_PROBABILITY = 0.02;
 final float PHOTOSYNTHESIS_SPEED = 0.1;
-final float DEATH_CONSTANT = 0.0002;
+final float DEATH_CONSTANT = 0.000002;
 
 final float SEED_SPROUT_INITIAL_NUTRITION = 100;
 final int SIMULATION_SPEED = 20;
@@ -25,8 +25,8 @@ void setup() {
   cells = new Cell[heightInCells][widthInCells];
   cellsNext = new Cell[heightInCells][widthInCells];
   noStroke();
-  flyingDirtConfiguration(0.3);
-  //oneSeedConfiguration();
+  //flyingDirtConfiguration(0.3);
+  oneSeedConfiguration();
 }
 
 void draw() {

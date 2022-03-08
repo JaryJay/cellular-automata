@@ -51,8 +51,8 @@ void nutritionDistribution() {
         for (Cell adj : adjacentPlantCellsAndSoil(x, y)) {
           if (adj.nutrition > c.nutrition) {
             float diff = adj.nutrition - c.nutrition;
-            newNutrition[y][x] += diff * 0.06;
-            newNutrition[adj.y][adj.x] -= diff * 0.06;
+            newNutrition[y][x] += diff * 0.2;
+            newNutrition[adj.y][adj.x] -= diff * 0.2;
           }
         }
       } else if (isPlantCell(x, y)) {
@@ -81,7 +81,7 @@ void aging() {
     for (int x = 0; x < widthInCells; x++) {
       if (cellsNext[y][x] != null) {
         cellsNext[y][x].age++;
-        if (isType(x, y, "youngPlant") && cellsNext[y][x].age > 40) {
+        if (isType(x, y, "youngPlant") && cellsNext[y][x].age > 60) {
           Cell prev = cellsNext[y][x];
           cellsNext[y][x] = new OldPlantCell(prev.nutrition, prev.species, x, y);
           cellsNext[y][x].age = prev.age;

@@ -81,7 +81,7 @@ Cell possiblyGrow(int x, int y) {
     // a young plant cell or a petal cell
     float totalNutritionForPetals = 0;
     
-    for (Cell adj : adjacentPlantCells(,)
+    //for (Cell adj : adjacentPlantCells(,)
 
     // Check cell to the left
     if (isType(x-1, y, "youngPlant")) {
