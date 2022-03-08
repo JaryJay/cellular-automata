@@ -1,9 +1,12 @@
 // Parameters
-final float GROWTH_FACTOR = 0.3;
+final float GROWTH_FACTOR = 0.1;
+final float ROOT_GROWTH_FACTOR = 0.008;
 final float SPROUTING_PROBABILITY = 0.02;
 final float PHOTOSYNTHESIS_SPEED = 0.1;
+final float DEATH_CONSTANT = 0.0002;
 
 final float SEED_SPROUT_INITIAL_NUTRITION = 100;
+final int SIMULATION_SPEED = 20;
 
 // Visual parameters
 int widthInCells = 300;
@@ -18,11 +21,12 @@ void settings() {
 }
 
 void setup() {
+  //frameRate(SIMULATION_SPEED);
   cells = new Cell[heightInCells][widthInCells];
   cellsNext = new Cell[heightInCells][widthInCells];
   noStroke();
-  //flyingDirtConfiguration(0.3);
-  oneSeedConfiguration();
+  flyingDirtConfiguration(0.3);
+  //oneSeedConfiguration();
 }
 
 void draw() {
@@ -31,6 +35,11 @@ void draw() {
   gravityAndGrowth();
   replaceCells();
   photosynthesisAndSeedSprouting();
+  replaceCells();
+  nutritionDistribution();
+  aging();
+  replaceCells();
+  deathAndDecomposition();
   replaceCells();
 }
 
@@ -49,6 +58,15 @@ void replaceCells() {
   for (int y = 0; y < heightInCells; y++) {
     for (int x = 0; x < widthInCells; x++) {
       cells[y][x] = cellsNext[y][x];
+    }
+  }
+}
+
+// Just like replaceCells(), except it copies each cell
+void deepCopyCells() {
+  for (int y = 0; y < heightInCells; y++) {
+    for (int x = 0; x < widthInCells; x++) {
+      cells[y][x] = cellsNext[y][x] == null ? null : cellsNext[y][x].copy();
     }
   }
 }
