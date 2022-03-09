@@ -111,23 +111,23 @@ Cell possiblyGrow(int x, int y) {
     float growthProbability = -0.2 * totalNutrition * 0.01 * (totalNutrition * 0.01 - 4);
     float rand = random(1);
     //println(rand, );
-    if (rand < growthProbability * GROWTH_FACTOR) {
+    if (rand < growthProbability * GROWTH_FACTOR[species]) {
       return new YoungPlantCell(0, species, x, y);
-    } else if (rand < (growthProbability + totalNutritionForPetals) * GROWTH_FACTOR) {
+    } else if (rand < (growthProbability + totalNutritionForPetals) * GROWTH_FACTOR[species]) {
       return new PetalCell(0, species, x, y);
     }
   } else if (cells[y][x].type() == "soil") {
     int age = Integer.MAX_VALUE;
     // Check cell to the left
     if (isType(x-1, y, "root") && cells[y][x-1].age < MAX_ROOT_GROWTH_AGE) {
-      totalNutrition += cells[y][x-1].nutrition * 0.2;
+      totalNutrition += cells[y][x-1].nutrition * 0.06;
       species = cells[y][x-1].species;
       age = min(age, cells[y][x-1].age);
     }
 
     // Check cell to the right
     if (isType(x+1, y, "root") && cells[y][x+1].age < MAX_ROOT_GROWTH_AGE) {
-      totalNutrition += cells[y][x+1].nutrition * 0.2;
+      totalNutrition += cells[y][x+1].nutrition * 0.06;
       species = cells[y][x+1].species;
       age = min(age, cells[y][x+1].age);
     }
@@ -139,16 +139,16 @@ Cell possiblyGrow(int x, int y) {
       age = min(age, cells[y-1][x].age);
     }
     totalNutrition = min(100, totalNutrition);
-    float growthProbability = -0.5 * totalNutrition * 0.01 * (totalNutrition * 0.01 - 2);
+    float growthProbability = -0.6 * totalNutrition * 0.01 * (totalNutrition * 0.01 - 1);
     float rand = random(1);
-    if (rand < growthProbability * ROOT_GROWTH_FACTOR) {
+    if (rand < growthProbability * ROOT_GROWTH_FACTOR[species]) {
       RootCell r = new RootCell(0, species, x, y);
       r.age = age;
       return r;
     }
   } else if (cells[y][x].type() == "oldPlant") {
     if (numAirNeighbours(x, y) >= 5 && isType(x, y+1, "empty")) {
-      float growthProbability = cells[y][x].age * FLOWERING_PROBABILITY * (cells[y][x].nutrition - MIN_FLOWERING_NUTRITION) * 0.01;
+      float growthProbability = cells[y][x].age * FLOWERING_PROBABILITY[species] * (cells[y][x].nutrition - MIN_FLOWERING_NUTRITION) * 0.01;
       float rand = random(1);
       if (rand < growthProbability) {
         return new FlowerCell(0, cells[y][x].species, x, y);
@@ -156,7 +156,7 @@ Cell possiblyGrow(int x, int y) {
     }
   } else if (cells[y][x].type() == "flower") {
     if (cells[y][x].age == 120) {
-      if (random(1) < 0.8) {
+      if (random(1) < POLLINATION_PROBABILITY) {
         return new SeedCell(cells[y][x].species, x, y);
       } else {
         return new DeadPlantCell(cells[y][x].nutrition, 50, x, y);

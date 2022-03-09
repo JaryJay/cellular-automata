@@ -24,11 +24,11 @@ void photosynthesisAndSeedSprouting() {
         continue;
       } else if (c.type() == "seed" && y < heightInCells - 1) {
         if (isType(x, y+1, "soil") && isType(x, y-1, "empty") && random(1) < SPROUTING_PROBABILITY) {
-          cellsNext[y-1][x] = new YoungPlantCell(SEED_SPROUT_INITIAL_NUTRITION, c.species, x, y-1);
-          cellsNext[y][x] = new RootCell(SEED_SPROUT_INITIAL_NUTRITION, c.species, x, y);
+          cellsNext[y][x] = new YoungPlantCell(SEED_SPROUT_INITIAL_NUTRITION, c.species, x, y);
+          cellsNext[y+1][x] = new RootCell(SEED_SPROUT_INITIAL_NUTRITION, c.species, x, y+1);
         }
       } else if (c.type() == "youngPlant" || c.type() == "oldPlant") {
-        cellsNext[y][x].nutrition += numAirNeighbours(x, y) * PHOTOSYNTHESIS_SPEED - 0.5;
+        cellsNext[y][x].nutrition += numAirNeighbours(x, y) * PHOTOSYNTHESIS_SPEED[c.species] - LIVING_COST[c.species];
       }
     }
   }
@@ -51,16 +51,16 @@ void nutritionDistribution() {
         for (Cell adj : adjacentPlantCellsAndSoil(x, y)) {
           if (adj.nutrition > c.nutrition) {
             float diff = adj.nutrition - c.nutrition;
-            newNutrition[y][x] += diff * 0.06;
-            newNutrition[adj.y][adj.x] -= diff * 0.06;
+            newNutrition[y][x] += diff * 0.1;
+            newNutrition[adj.y][adj.x] -= diff * 0.1;
           }
         }
       } else if (isPlantCell(x, y)) {
         for (Cell adj : adjacentPlantCells(x, y)) {
           if (adj.nutrition > c.nutrition) {
             float diff = adj.nutrition - c.nutrition;
-            newNutrition[y][x] += diff * 0.06;
-            newNutrition[adj.y][adj.x] -= diff * 0.06;
+            newNutrition[y][x] += diff * 0.1;
+            newNutrition[adj.y][adj.x] -= diff * 0.1;
           }
         }
       }
@@ -97,10 +97,14 @@ void deathAndDecomposition() {
       if (cells[y][x] != null) {
         Cell c = cells[y][x];
         if (isPlantCell(x, y)) {
-
           float deathProbability = log(c.age) * DEATH_CONSTANT / (c.nutrition + 0.01);
+          if (isType(x, y, "root")) {
+            deathProbability = log(c.age) * ROOT_DEATH_CONSTANT / (c.nutrition + 0.01);
+          } else if (isType(x, y, "petal")) {
+            deathProbability *= 10;
+          }
           if (random(1) < deathProbability) {
-            if (c.nutrition > 30 && random(1) < 0.8) {
+            if (c.nutrition > 30 && random(1) < DECOMPOSITION_PROBABILIY) {
               cellsNext[y][x] = new DeadPlantCell(c.nutrition, int(120 + random(20)), x, y);
             } else {
               cellsNext[y][x] = null;
