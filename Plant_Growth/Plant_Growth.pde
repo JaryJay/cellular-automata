@@ -1,11 +1,14 @@
 // Parameters
-final float GROWTH_FACTOR = 0.04;
-final float ROOT_GROWTH_FACTOR = 0.008;
-final float SPROUTING_PROBABILITY = 0.02;
-final float PHOTOSYNTHESIS_SPEED = 0.1;
-final float DEATH_CONSTANT = 0.000002;
+final float GROWTH_FACTOR = 0.03;
+final float ROOT_GROWTH_FACTOR = 0.03;
+final float SPROUTING_PROBABILITY = 0.002;
+final float FLOWERING_PROBABILITY = 0.0008;
+final float MIN_FLOWERING_NUTRITION = 50;
+final float MAX_ROOT_GROWTH_AGE = 600;
+final float PHOTOSYNTHESIS_SPEED = 1.4;
+final float DEATH_CONSTANT = 0.001;
 
-final float SEED_SPROUT_INITIAL_NUTRITION = 100;
+final float SEED_SPROUT_INITIAL_NUTRITION = 300;
 final int SIMULATION_SPEED = 20;
 
 // Visual parameters

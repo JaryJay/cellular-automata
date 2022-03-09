@@ -23,12 +23,12 @@ void photosynthesisAndSeedSprouting() {
       if (c == null) {
         continue;
       } else if (c.type() == "seed" && y < heightInCells - 1) {
-        if (isType(x, y+1, "soil") && random(1) < SPROUTING_PROBABILITY) {
-          cellsNext[y][x] = new YoungPlantCell(SEED_SPROUT_INITIAL_NUTRITION, c.species, x, y);
-          cellsNext[y+1][x] = new RootCell(SEED_SPROUT_INITIAL_NUTRITION, c.species, x, y);
+        if (isType(x, y+1, "soil") && isType(x, y-1, "empty") && random(1) < SPROUTING_PROBABILITY) {
+          cellsNext[y-1][x] = new YoungPlantCell(SEED_SPROUT_INITIAL_NUTRITION, c.species, x, y-1);
+          cellsNext[y][x] = new RootCell(SEED_SPROUT_INITIAL_NUTRITION, c.species, x, y);
         }
       } else if (c.type() == "youngPlant" || c.type() == "oldPlant") {
-        cellsNext[y][x].nutrition += numAirNeighbours(x, y) * PHOTOSYNTHESIS_SPEED;
+        cellsNext[y][x].nutrition += numAirNeighbours(x, y) * PHOTOSYNTHESIS_SPEED - 0.5;
       }
     }
   }
@@ -51,8 +51,8 @@ void nutritionDistribution() {
         for (Cell adj : adjacentPlantCellsAndSoil(x, y)) {
           if (adj.nutrition > c.nutrition) {
             float diff = adj.nutrition - c.nutrition;
-            newNutrition[y][x] += diff * 0.2;
-            newNutrition[adj.y][adj.x] -= diff * 0.2;
+            newNutrition[y][x] += diff * 0.06;
+            newNutrition[adj.y][adj.x] -= diff * 0.06;
           }
         }
       } else if (isPlantCell(x, y)) {
@@ -85,7 +85,6 @@ void aging() {
           Cell prev = cellsNext[y][x];
           cellsNext[y][x] = new OldPlantCell(prev.nutrition, prev.species, x, y);
           cellsNext[y][x].age = prev.age;
-          println(cellsNext[y][x].age, cellsNext[y][x].nutrition);
         }
       }
     }
@@ -99,9 +98,13 @@ void deathAndDecomposition() {
         Cell c = cells[y][x];
         if (isPlantCell(x, y)) {
 
-          float deathProbability = c.age * DEATH_CONSTANT / (c.nutrition + 0.01);
+          float deathProbability = log(c.age) * DEATH_CONSTANT / (c.nutrition + 0.01);
           if (random(1) < deathProbability) {
-            cellsNext[y][x] = new DeadPlantCell(c.nutrition, int(120 + random(20)), x, y);
+            if (c.nutrition > 30 && random(1) < 0.8) {
+              cellsNext[y][x] = new DeadPlantCell(c.nutrition, int(120 + random(20)), x, y);
+            } else {
+              cellsNext[y][x] = null;
+            }
           }
         } else if (isType(x, y, "deadPlant")) {
           DeadPlantCell deadCell = (DeadPlantCell) c;
