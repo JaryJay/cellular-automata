@@ -69,11 +69,13 @@ void replaceCells() {
   }
 }
 
-void mousePressed() {
-  for (int y = 0; y < heightInCells; y++) {
-    for (int x = 0; x < widthInCells; x++) {
-      if (isPlantCell(x, y)) {
-        cells[y][x] = new DeadPlantCell(cells[y][x].nutrition, 20 + int(random(50)), x, y);
+void keyPressed() {
+  if (key == 'k') {
+    for (int y = 0; y < heightInCells; y++) {
+      for (int x = 0; x < widthInCells; x++) {
+        if (isPlantCell(x, y)) {
+          cells[y][x] = new DeadPlantCell(cells[y][x].nutrition, 20 + int(random(50)), x, y);
+        }
       }
     }
   }
