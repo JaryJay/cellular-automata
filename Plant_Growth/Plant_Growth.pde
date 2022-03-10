@@ -1,18 +1,19 @@
 // Parameters
 final float[] GROWTH_FACTOR =         {0.035,  0.045,  0.025,  0.09};
-final float[] ROOT_GROWTH_FACTOR =    {0.18,   0.19,   0.17,   0.16};
-final float[] FLOWERING_PROBABILITY = {0.0008, 0.0010, 0.0007, 0.0018};
+final float[] ROOT_GROWTH_FACTOR =    {0.015,  0.038,  0.022,  0.03};
+final float[] DOWNWARD_GROWTH_BIAS =  {0.2,    0.95,   0.1,    0.6};
+final float[] FLOWERING_PROBABILITY = {0.0008, 0.0010, 0.0007, 0.0024};
 final float[] PHOTOSYNTHESIS_SPEED =  {0.4,    0.35,   0.4,    0.06};
 final float[] LIVING_COST =           {0.8,    1.0,    0.7,    0.12};
 final float SPROUTING_PROBABILITY = 0.05;
 final float POLLINATION_PROBABILITY = 1;
 final float DECOMPOSITION_PROBABILIY = 0.8;
 final float MIN_FLOWERING_NUTRITION = 80;
-final float MAX_ROOT_GROWTH_AGE = 300;
+final float MAX_ROOT_GROWTH_AGE = 600;
 final float DEATH_CONSTANT = 0.0005;
-final float ROOT_DEATH_CONSTANT = 0.005;
-final float DISTRIBUTION_SPEED = 0.7;
-final float ROOT_DISTRIBUTION_SPEED = 0.9;
+final float ROOT_DEATH_CONSTANT = 0.0006;
+final float DISTRIBUTION_SPEED = 0.3;
+final float ROOT_DISTRIBUTION_SPEED = 0.8;
 
 final float SEED_SPROUT_INITIAL_NUTRITION = 300;
 final int SIMULATION_SPEED = 20;

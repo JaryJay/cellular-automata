@@ -57,22 +57,22 @@ Cell possiblyGrow(int x, int y) {
     int age = Integer.MAX_VALUE;
     // Check cell to the left
     if (isType(x-1, y, "root") && cells[y][x-1].age < MAX_ROOT_GROWTH_AGE) {
-      totalNutrition += cells[y][x-1].nutrition * 0.02;
       species = cells[y][x-1].species;
+      totalNutrition += cells[y][x-1].nutrition * (1-DOWNWARD_GROWTH_BIAS[species]);
       age = min(age, cells[y][x-1].age);
     }
 
     // Check cell to the right
     if (isType(x+1, y, "root") && cells[y][x+1].age < MAX_ROOT_GROWTH_AGE) {
-      totalNutrition += cells[y][x+1].nutrition * 0.04;
       species = cells[y][x+1].species;
+      totalNutrition += cells[y][x+1].nutrition * (1-DOWNWARD_GROWTH_BIAS[species]);
       age = min(age, cells[y][x+1].age);
     }
 
     // Check above cell
     if (isType(x, y-1, "root") && cells[y-1][x].age < MAX_ROOT_GROWTH_AGE) {
-      totalNutrition += cells[y-1][x].nutrition * 1.2;
       species = cells[y-1][x].species;
+      totalNutrition += cells[y-1][x].nutrition * (2*DOWNWARD_GROWTH_BIAS[species]);
       age = min(age, cells[y-1][x].age);
     }
     totalNutrition = min(100, totalNutrition);
