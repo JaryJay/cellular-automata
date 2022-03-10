@@ -94,3 +94,32 @@ Cell possiblyGrow(int x, int y) {
   }
   return cells[y][x];
 }
+
+float[][] newNutrition = new float[heightInCells][widthInCells];
+
+void absorbNutrition(int x, int y) {
+  Cell c = cells[y][x];
+  if (c.type() == "root") {
+    for (Cell adj : adjacentPlantCellsAndSoil(x, y)) {
+      if (adj.nutrition > c.nutrition) {
+        float multiplier;
+        if (adj.type() == "soil") {
+          multiplier = 0.3;
+        } else {
+          multiplier = 0.1;
+        }
+        float diff = adj.nutrition - c.nutrition;
+        newNutrition[y][x] += diff * multiplier;
+        newNutrition[adj.y][adj.x] -= diff * multiplier;
+      }
+    }
+  } else if (isPlantCell(x, y)) {
+    for (Cell adj : adjacentPlantCells(x, y)) {
+      if (adj.nutrition > c.nutrition) {
+        float diff = adj.nutrition - c.nutrition;
+        newNutrition[y][x] += diff * 0.1;
+        newNutrition[adj.y][adj.x] -= diff * 0.1;
+      }
+    }
+  }
+}

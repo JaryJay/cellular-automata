@@ -35,9 +35,9 @@ void photosynthesisAndSeedSprouting() {
 }
 
 void nutritionDistribution() {
-  float[][] newNutrition = new float[heightInCells][widthInCells];
   for (int y = 0; y < heightInCells; y++) {
     for (int x = 0; x < widthInCells; x++) {
+      // Set the new nutrition values (found in Algorithms)
       newNutrition[y][x] = cells[y][x] == null ? 0 : cells[y][x].nutrition;
     }
   }
@@ -47,28 +47,8 @@ void nutritionDistribution() {
       Cell c = cells[y][x];
       if (c == null) {
         continue;
-      } else if (c.type() == "root") {
-        for (Cell adj : adjacentPlantCellsAndSoil(x, y)) {
-          if (adj.nutrition > c.nutrition) {
-            float multiplier;
-            if (adj.type() == "soil") {
-              multiplier = 0.3;
-            } else {
-              multiplier = 0.1;
-            }
-            float diff = adj.nutrition - c.nutrition;
-            newNutrition[y][x] += diff * multiplier;
-            newNutrition[adj.y][adj.x] -= diff * multiplier;
-          }
-        }
-      } else if (isPlantCell(x, y)) {
-        for (Cell adj : adjacentPlantCells(x, y)) {
-          if (adj.nutrition > c.nutrition) {
-            float diff = adj.nutrition - c.nutrition;
-            newNutrition[y][x] += diff * 0.1;
-            newNutrition[adj.y][adj.x] -= diff * 0.1;
-          }
-        }
+      } else {
+        absorbNutrition(x, y);
       }
     }
   }
