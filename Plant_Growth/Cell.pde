@@ -88,7 +88,7 @@ class DeadPlantCell extends Cell {
 
 
   void display(int x, int y) {
-    lerpFill(142, 155, 140, 61, 45, 11, nutrition);
+    lerpFill(142, 155, 140, 133, 122, 110, nutrition);
     rect(x * cellSize, y * cellSize, cellSize, cellSize);
   }
 
@@ -132,7 +132,7 @@ class FlowerCell extends Cell {
 
 
   void display(int x, int y) {
-    fill(255, 222, 175);
+    fill(255, 185, 84);
     rect(x * cellSize, y * cellSize, cellSize, cellSize);
   }
 

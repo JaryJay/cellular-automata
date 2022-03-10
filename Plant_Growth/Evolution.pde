@@ -50,9 +50,15 @@ void nutritionDistribution() {
       } else if (c.type() == "root") {
         for (Cell adj : adjacentPlantCellsAndSoil(x, y)) {
           if (adj.nutrition > c.nutrition) {
+            float multiplier;
+            if (adj.type() == "soil") {
+              multiplier = 0.3;
+            } else {
+              multiplier = 0.1;
+            }
             float diff = adj.nutrition - c.nutrition;
-            newNutrition[y][x] += diff * 0.1;
-            newNutrition[adj.y][adj.x] -= diff * 0.1;
+            newNutrition[y][x] += diff * multiplier;
+            newNutrition[adj.y][adj.x] -= diff * multiplier;
           }
         }
       } else if (isPlantCell(x, y)) {

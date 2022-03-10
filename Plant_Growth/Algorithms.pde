@@ -144,6 +144,7 @@ Cell possiblyGrow(int x, int y) {
     if (rand < growthProbability * ROOT_GROWTH_FACTOR[species]) {
       RootCell r = new RootCell(0, species, x, y);
       r.age = age;
+      r.nutrition = cells[y][x].nutrition;
       return r;
     }
   } else if (cells[y][x].type() == "oldPlant") {

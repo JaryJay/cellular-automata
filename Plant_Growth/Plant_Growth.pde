@@ -2,9 +2,9 @@
 final float[] GROWTH_FACTOR =         {0.035,  0.045,  0.025,  0.09};
 final float[] ROOT_GROWTH_FACTOR =    {0.18,   0.19,   0.17,   0.16};
 final float[] FLOWERING_PROBABILITY = {0.0008, 0.0010, 0.0007, 0.0018};
-final float[] PHOTOSYNTHESIS_SPEED =  {0.4,    0.35,   0.5,    0.1};
-final float[] LIVING_COST =           {0.8,    0.9,    0.7,    0.2};
-final float SPROUTING_PROBABILITY = 0.2;
+final float[] PHOTOSYNTHESIS_SPEED =  {0.4,    0.35,   0.4,    0.06};
+final float[] LIVING_COST =           {0.8,    1.0,    0.7,    0.12};
+final float SPROUTING_PROBABILITY = 0.05;
 final float POLLINATION_PROBABILITY = 1;
 final float DECOMPOSITION_PROBABILIY = 0.8;
 final float MIN_FLOWERING_NUTRITION = 80;
