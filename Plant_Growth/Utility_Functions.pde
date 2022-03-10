@@ -14,6 +14,13 @@ boolean isPlantCell(int x, int y) {
   return false;
 }
 
+boolean isYoungOrOldPlantCell(int x, int y) {
+  if (x >= 0 && x < widthInCells && y >= 0 && y < heightInCells) {
+    return (isType(x, y, "youngPlant")) || isType(x, y, "oldPlant");
+  }
+  return false;
+}
+
 int numAirNeighbours(int x, int y) {
   int count = 0;
   for (int i = y - 1; i <= y + 1; i++) {
@@ -24,6 +31,48 @@ int numAirNeighbours(int x, int y) {
     }
   }
   return count;
+}
+
+int numAdjYoungOldPlantCells(int x, int y) {
+  int num = 0;
+  int j = x-1, i = y;
+  if (isPlantCell(j, i))
+    num++;
+
+  j = x+1;
+  if (isPlantCell(j, i))
+    num++;
+
+  j = x;
+  i = y-1;
+  if (isPlantCell(j, i))
+    num++;
+
+  i=y+1;
+  if (isPlantCell(j, i))
+    num++;
+  return num;
+}
+
+int numAdjRootCells(int x, int y) {
+  int num = 0;
+  int j = x-1, i = y;
+  if (isType(j, i, "root"))
+    num++;
+
+  j = x+1;
+  if (isType(j, i, "root"))
+    num++;
+
+  j = x;
+  i = y-1;
+  if (isType(j, i, "root"))
+    num++;
+
+  i=y+1;
+  if (isType(j, i, "root"))
+    num++;
+  return num;
 }
 
 List<Cell> adjacentPlantCells(int x, int y) {

@@ -4,6 +4,10 @@ Cell possiblyGrow(int x, int y) {
   float totalNutrition = 0;
   int species = 0;
   if (cells[y][x] == null) {
+    
+    if (numAdjYoungOldPlantCells(x, y) >= 3) {
+      return null;
+    }
 
     // Used to determine whether to transform the air cell into
     // a young plant cell or a petal cell
@@ -45,31 +49,36 @@ Cell possiblyGrow(int x, int y) {
       return new PetalCell(0, species, x, y);
     }
   } else if (cells[y][x].type() == "soil") {
+    
+    if (numAdjRootCells(x, y) >= 2) {
+      return cells[y][x];
+    }
+    
     int age = Integer.MAX_VALUE;
     // Check cell to the left
     if (isType(x-1, y, "root") && cells[y][x-1].age < MAX_ROOT_GROWTH_AGE) {
-      totalNutrition += cells[y][x-1].nutrition * 0.06;
+      totalNutrition += cells[y][x-1].nutrition * 0.02;
       species = cells[y][x-1].species;
       age = min(age, cells[y][x-1].age);
     }
 
     // Check cell to the right
     if (isType(x+1, y, "root") && cells[y][x+1].age < MAX_ROOT_GROWTH_AGE) {
-      totalNutrition += cells[y][x+1].nutrition * 0.06;
+      totalNutrition += cells[y][x+1].nutrition * 0.04;
       species = cells[y][x+1].species;
       age = min(age, cells[y][x+1].age);
     }
 
     // Check above cell
     if (isType(x, y-1, "root") && cells[y-1][x].age < MAX_ROOT_GROWTH_AGE) {
-      totalNutrition += cells[y-1][x].nutrition;
+      totalNutrition += cells[y-1][x].nutrition * 1.2;
       species = cells[y-1][x].species;
       age = min(age, cells[y-1][x].age);
     }
     totalNutrition = min(100, totalNutrition);
-    float growthProbability = -0.6 * totalNutrition * 0.01 * (totalNutrition * 0.01 - 1);
+    float growthProbability = totalNutrition * 0.01 * ROOT_GROWTH_FACTOR[species];
     float rand = random(1);
-    if (rand < growthProbability * ROOT_GROWTH_FACTOR[species]) {
+    if (rand < growthProbability) {
       RootCell r = new RootCell(0, species, x, y);
       r.age = age;
       r.nutrition = cells[y][x].nutrition;
@@ -77,7 +86,7 @@ Cell possiblyGrow(int x, int y) {
     }
   } else if (cells[y][x].type() == "oldPlant") {
     if (numAirNeighbours(x, y) >= 5 && isType(x, y+1, "empty")) {
-      float growthProbability = cells[y][x].age * FLOWERING_PROBABILITY[species] * (cells[y][x].nutrition - MIN_FLOWERING_NUTRITION) * 0.01;
+      float growthProbability = log(cells[y][x].age) * FLOWERING_PROBABILITY[species] * (cells[y][x].nutrition - MIN_FLOWERING_NUTRITION) * 0.01;
       float rand = random(1);
       if (rand < growthProbability) {
         return new FlowerCell(0, cells[y][x].species, x, y);
@@ -102,23 +111,17 @@ void absorbNutrition(int x, int y) {
   if (c.type() == "root") {
     for (Cell adj : adjacentPlantCellsAndSoil(x, y)) {
       if (adj.nutrition > c.nutrition) {
-        float multiplier;
-        if (adj.type() == "soil") {
-          multiplier = 0.3;
-        } else {
-          multiplier = 0.1;
-        }
         float diff = adj.nutrition - c.nutrition;
-        newNutrition[y][x] += diff * multiplier;
-        newNutrition[adj.y][adj.x] -= diff * multiplier;
+        newNutrition[y][x] += diff * 0.2 * ROOT_DISTRIBUTION_SPEED;
+        newNutrition[adj.y][adj.x] -= diff * 0.2 * ROOT_DISTRIBUTION_SPEED;
       }
     }
   } else if (isPlantCell(x, y)) {
     for (Cell adj : adjacentPlantCells(x, y)) {
       if (adj.nutrition > c.nutrition) {
         float diff = adj.nutrition - c.nutrition;
-        newNutrition[y][x] += diff * 0.1;
-        newNutrition[adj.y][adj.x] -= diff * 0.1;
+        newNutrition[y][x] += diff * 0.2 * DISTRIBUTION_SPEED;
+        newNutrition[adj.y][adj.x] -= diff * 0.2 * DISTRIBUTION_SPEED;
       }
     }
   }
