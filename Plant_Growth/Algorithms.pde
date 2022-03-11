@@ -54,33 +54,28 @@ Cell possiblyGrow(int x, int y) {
       return cells[y][x];
     }
     
-    int age = Integer.MAX_VALUE;
     // Check cell to the left
     if (isType(x-1, y, "root") && cells[y][x-1].age < MAX_ROOT_GROWTH_AGE) {
       species = cells[y][x-1].species;
       totalNutrition += cells[y][x-1].nutrition * (1-DOWNWARD_GROWTH_BIAS[species]);
-      age = min(age, cells[y][x-1].age);
     }
 
     // Check cell to the right
     if (isType(x+1, y, "root") && cells[y][x+1].age < MAX_ROOT_GROWTH_AGE) {
       species = cells[y][x+1].species;
       totalNutrition += cells[y][x+1].nutrition * (1-DOWNWARD_GROWTH_BIAS[species]);
-      age = min(age, cells[y][x+1].age);
     }
 
     // Check above cell
     if (isType(x, y-1, "root") && cells[y-1][x].age < MAX_ROOT_GROWTH_AGE) {
       species = cells[y-1][x].species;
       totalNutrition += cells[y-1][x].nutrition * (2*DOWNWARD_GROWTH_BIAS[species]);
-      age = min(age, cells[y-1][x].age);
     }
     totalNutrition = min(100, totalNutrition);
     float growthProbability = totalNutrition * 0.01 * ROOT_GROWTH_FACTOR[species];
     float rand = random(1);
     if (rand < growthProbability) {
       RootCell r = new RootCell(0, species, x, y);
-      r.age = age;
       r.nutrition = cells[y][x].nutrition;
       return r;
     }

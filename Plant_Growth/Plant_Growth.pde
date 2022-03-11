@@ -1,6 +1,6 @@
 // Parameters
 final float[] GROWTH_FACTOR =         {0.035,  0.045,  0.030,  0.09};
-final float[] ROOT_GROWTH_FACTOR =    {0.015,  0.038,  0.022,  0.03};
+final float[] ROOT_GROWTH_FACTOR =    {0.015,  0.038,  0.022,  0.025};
 final float[] DOWNWARD_GROWTH_BIAS =  {0.2,    0.95,   0.1,    0.6};
 final int[] MATURITY_AGE =            {55,     50,     60,     80};
 final float[] FLOWERING_PROBABILITY = {0.0008, 0.0010, 0.0007, 0.0024};
@@ -10,7 +10,7 @@ final float SPROUTING_PROBABILITY = 0.03;
 final float POLLINATION_PROBABILITY = 1;
 final float DECOMPOSITION_PROBABILIY = 0.4;
 final float MIN_FLOWERING_NUTRITION = 80;
-final float MAX_ROOT_GROWTH_AGE = 600;
+final float MAX_ROOT_GROWTH_AGE = 100;
 final float DEATH_CONSTANT = 0.0005;
 final float ROOT_DEATH_CONSTANT = 0.0006;
 final float DISTRIBUTION_SPEED = 0.3;
@@ -89,7 +89,11 @@ void keyPressed() {
     for (int y = 0; y < heightInCells; y++) {
       for (int x = 0; x < widthInCells; x++) {
         if (isPlantCell(x, y)) {
-          cells[y][x] = new DeadPlantCell(cells[y][x].nutrition, 20 + int(random(50)), x, y);
+          if (random(1) < DECOMPOSITION_PROBABILIY) {
+            cells[y][x] = new DeadPlantCell(cells[y][x].nutrition, 20 + int(random(50)), x, y);
+          } else {
+            cells[y][x] = null;
+          }
         }
       }
     }
