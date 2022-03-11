@@ -28,7 +28,7 @@ void photosynthesisAndSeedSprouting() {
           cellsNext[y+1][x] = new RootCell(SEED_SPROUT_INITIAL_NUTRITION, c.species, x, y+1);
         }
       } else if (c.type() == "youngPlant" || c.type() == "oldPlant") {
-        cellsNext[y][x].nutrition += numAirNeighbours(x, y) * PHOTOSYNTHESIS_SPEED[c.species] - LIVING_COST[c.species];
+        cellsNext[y][x].nutrition += numAirNeighbours(x, y) * PHOTOSYNTHESIS_SPEED[c.species] * LIGHT_AMOUNT - LIVING_COST[c.species];
       }
     }
   }

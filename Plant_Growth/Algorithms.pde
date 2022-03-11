@@ -40,12 +40,17 @@ Cell possiblyGrow(int x, int y) {
       species = cells[y+1][x].species;
     }
     // Decide whether to return a young plant cell or petal cell or neither
-    float growthProbability = -0.2 * totalNutrition * 0.01 * (totalNutrition * 0.01 - 4);
+    float z = totalNutrition * 0.01;
+    //float growthProbability = (0.055 * (1.92*z-1.1) * (1.92*z-5.8) * (1.92*z-2.1) + 0.726) * GROWTH_FACTOR[species];
+    float growthProbability = z * GROWTH_FACTOR[species];
+    //float
+    float petalGrowthProbability = totalNutritionForPetals * GROWTH_FACTOR[species];
+    //float growthProbability = totalNutrition * 0.01 * GROWTH_FACTOR[species];
     float rand = random(1);
     //println(rand, );
-    if (rand < growthProbability * GROWTH_FACTOR[species]) {
+    if (rand < growthProbability) {
       return new YoungPlantCell(0, species, x, y);
-    } else if (rand < (growthProbability + totalNutritionForPetals) * GROWTH_FACTOR[species]) {
+    } else if (rand < growthProbability + petalGrowthProbability) {
       return new PetalCell(0, species, x, y);
     }
   } else if (cells[y][x].type() == "soil") {
