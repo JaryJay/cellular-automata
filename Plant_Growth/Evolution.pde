@@ -67,7 +67,7 @@ void aging() {
     for (int x = 0; x < widthInCells; x++) {
       if (cellsNext[y][x] != null) {
         cellsNext[y][x].age++;
-        if (isType(x, y, "youngPlant") && cellsNext[y][x].age > 60) {
+        if (isType(x, y, "youngPlant") && cellsNext[y][x].age > MATURITY_AGE[cells[y][x].species]) {
           Cell prev = cellsNext[y][x];
           cellsNext[y][x] = new OldPlantCell(prev.nutrition, prev.species, x, y);
           cellsNext[y][x].age = prev.age;
@@ -87,7 +87,7 @@ void deathAndDecomposition() {
           if (isType(x, y, "root")) {
             deathProbability = log(c.age) * ROOT_DEATH_CONSTANT / (c.nutrition + 0.01);
           } else if (isType(x, y, "petal")) {
-            deathProbability *= 10;
+            deathProbability *= 100;
           }
           if (random(1) < deathProbability) {
             if (c.nutrition > 30 && random(1) < DECOMPOSITION_PROBABILIY) {

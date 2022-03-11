@@ -1,13 +1,14 @@
 // Parameters
-final float[] GROWTH_FACTOR =         {0.035,  0.045,  0.025,  0.09};
+final float[] GROWTH_FACTOR =         {0.035,  0.045,  0.030,  0.09};
 final float[] ROOT_GROWTH_FACTOR =    {0.015,  0.038,  0.022,  0.03};
 final float[] DOWNWARD_GROWTH_BIAS =  {0.2,    0.95,   0.1,    0.6};
+final int[] MATURITY_AGE =            {55,     50,     60,     80};
 final float[] FLOWERING_PROBABILITY = {0.0008, 0.0010, 0.0007, 0.0024};
 final float[] PHOTOSYNTHESIS_SPEED =  {0.4,    0.35,   0.4,    0.06};
 final float[] LIVING_COST =           {0.8,    1.0,    0.7,    0.12};
-final float SPROUTING_PROBABILITY = 0.05;
+final float SPROUTING_PROBABILITY = 0.03;
 final float POLLINATION_PROBABILITY = 1;
-final float DECOMPOSITION_PROBABILIY = 0.8;
+final float DECOMPOSITION_PROBABILIY = 0.4;
 final float MIN_FLOWERING_NUTRITION = 80;
 final float MAX_ROOT_GROWTH_AGE = 600;
 final float DEATH_CONSTANT = 0.0005;
@@ -16,7 +17,7 @@ final float DISTRIBUTION_SPEED = 0.3;
 final float ROOT_DISTRIBUTION_SPEED = 0.8;
 
 final float SEED_SPROUT_INITIAL_NUTRITION = 300;
-final int SIMULATION_SPEED = 20;
+final int SIMULATION_SPEED = 60;
 
 // Visual parameters
 int widthInCells = 300;
@@ -31,7 +32,7 @@ void settings() {
 }
 
 void setup() {
-  //frameRate(SIMULATION_SPEED);
+  frameRate(SIMULATION_SPEED);
   cells = new Cell[heightInCells][widthInCells];
   cellsNext = new Cell[heightInCells][widthInCells];
   noStroke();
@@ -71,6 +72,17 @@ void replaceCells() {
     }
   }
 }
+
+void mousePressed() {
+  int x = mouseX / cellSize;
+  int y = mouseY / cellSize;
+  if (cells[y][x] == null && mouseButton == LEFT) {
+    cells[y][x] = new SeedCell(int(random(4)), x, y);
+  } else if (mouseButton == RIGHT) {
+    cells[y][x] = null;
+  }
+}
+
 
 void keyPressed() {
   if (key == 'k') {
