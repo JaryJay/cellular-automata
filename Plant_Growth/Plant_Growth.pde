@@ -52,13 +52,16 @@ void setup() {
   cells = new Cell[heightInCells][widthInCells];
   cellsNext = new Cell[heightInCells][widthInCells];
   noStroke();
-  // Ctrl+click on bumpyGroundConfiguration to see parameter information
-  bumpyGroundConfiguration(50, 10, 2, 0); 
+  // For explanation of setup functions, see Setup
+  bumpyGroundConfiguration(50, 10, 10, 0); 
   //flatGroundConfiguration(50);
+  
+  spawnSeedsOfAllSpecies(80);
 }
 
 void draw() {
   background(129, 180, 240);
+  // For explanation of functions, see Evolution
   drawCells();
   gravityAndGrowth();
   replaceCells();

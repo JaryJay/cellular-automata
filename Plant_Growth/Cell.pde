@@ -1,3 +1,4 @@
+// Superclass of all cells
 abstract class Cell {
   float nutrition;
   int age = 0;

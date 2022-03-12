@@ -1,5 +1,6 @@
 import java.util.List;
 
+// Safely checks the type of cell at x, y
 boolean isType(int x, int y, String type) {
   if (x >= 0 && x < widthInCells && y >= 0 && y < heightInCells) {
     return cells[y][x] == null ? (type.equals("empty")) : (cells[y][x].type() == type);
@@ -7,6 +8,7 @@ boolean isType(int x, int y, String type) {
   return false;
 }
 
+// Checks whether or not the cell at x, y is a young, old, root, flower, or petal cell
 boolean isPlantCell(int x, int y) {
   if (x >= 0 && x < widthInCells && y >= 0 && y < heightInCells) {
     return (!isType(x, y, "empty")) && !isType(x, y, "deadPlant") && !isType(x, y, "soil") && !isType(x, y, "seed");
@@ -21,6 +23,7 @@ boolean isYoungOrOldPlantCell(int x, int y) {
   return false;
 }
 
+// The number of neighbouring empty cells around x, y
 int numAirNeighbours(int x, int y) {
   int count = 0;
   for (int i = y - 1; i <= y + 1; i++) {
@@ -33,6 +36,7 @@ int numAirNeighbours(int x, int y) {
   return count;
 }
 
+// The number of adjacent cells of the specified type
 int numAdjCellsOfType(int x, int y, String type) {
   int num = 0;
   int j = x-1, i = y;
@@ -77,6 +81,7 @@ Cell adjCellOfType(int x, int y, String type) {
   throw new IllegalStateException("No adjacent flower cells.");
 }
 
+// Returns a list of adjacent plant cells
 List<Cell> adjacentPlantCells(int x, int y) {
   List<Cell> adj = new ArrayList<Cell>();
   int j = x-1, i = y;
@@ -99,6 +104,7 @@ List<Cell> adjacentPlantCells(int x, int y) {
   return adj;
 }
 
+// Returns a list of adjacent plant cells and soil cells
 List<Cell> adjacentPlantCellsAndSoil(int x, int y) {
   List<Cell> adj = new ArrayList<Cell>();
   int j = x-1, i = y;
