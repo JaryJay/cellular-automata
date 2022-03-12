@@ -9,7 +9,7 @@ void flatGroundConfiguration(int groundHeight) {
 void bumpyGroundConfiguration(int groundHeight, int bumpiness, float period, float phaseShift) {
   for (int y=heightInCells - groundHeight - bumpiness; y < heightInCells; y++) {
     for (int x=0; x < widthInCells; x++) {
-      if (y - heightInCells + groundHeight > sin((x - phaseShift) / period) * bumpiness) {
+      if (y - heightInCells + groundHeight >= sin((x - phaseShift) / period) * bumpiness) {
         cells[y][x] = new SoilCell(SOIL_NUTRITION_MIN + round(random(SOIL_NUTRITION_MAX - SOIL_NUTRITION_MIN)), x, y);
       }
     }

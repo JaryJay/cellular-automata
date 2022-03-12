@@ -76,7 +76,7 @@ Cell possiblyGrow(int x, int y) {
     }
     
   } else if (cells[y][x].type() == "oldPlant") {
-    // Possibly grow into a flower cell
+    // Possibly grow into a flower cell, must have at least 5 air neighbours
     if (numAirNeighbours(x, y) >= 5 && isType(x, y+1, "empty")) {
       float growthProbability = log(cells[y][x].age) * FLOWERING_PROBABILITY[cells[y][x].species] * (cells[y][x].nutrition - MIN_FLOWERING_NUTRITION) * 0.01;
       if (random(1) < growthProbability) {

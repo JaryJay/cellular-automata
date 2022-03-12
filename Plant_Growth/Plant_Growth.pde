@@ -35,7 +35,7 @@ final float SEED_SPROUT_INITIAL_NUTRITION = 300; // Initial nutrition of newborn
 final int SIMULATION_SPEED = 60; // 60 is the best
 
 // Visual parameters
-int widthInCells = 300;
+int widthInCells = 380;
 int heightInCells = 180;
 int cellSize = 5;
 
