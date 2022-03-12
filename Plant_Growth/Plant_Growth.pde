@@ -59,8 +59,8 @@ void setup() {
   cellsNext = new Cell[heightInCells][widthInCells];
   noStroke();
   // For explanation of setup functions, see Setup
-  bumpyGroundConfiguration(50, 10, 10, 0);
-  //flatGroundConfiguration(50);
+  //bumpyGroundConfiguration(50, 10, 10, 0);
+  flatGroundConfiguration(50);
   
   spawnSeedsOfAllSpecies(80);
 }
