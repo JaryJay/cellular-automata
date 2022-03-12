@@ -82,6 +82,14 @@ void drawCells() {
   }
 }
 
+void replaceCells() {
+  for (int y = 0; y < heightInCells; y++) {
+    for (int x = 0; x < widthInCells; x++) {
+      cells[y][x] = cellsNext[y][x];
+    }
+  }
+}
+
 // Click to drop seeds!
 void mousePressed() {
   int x = mouseX / cellSize;
