@@ -20,8 +20,6 @@ abstract class Cell {
     String t = type();
     return t == "deadPlant" || t == "seed" || t == "soil";
   }
-
-  abstract Cell copy();
 }
 
 // Used to fill by linearly interpolating between two different colors
@@ -49,11 +47,6 @@ class YoungPlantCell extends Cell {
   String type() {
     return "youngPlant";
   }
-
-
-  YoungPlantCell copy() {
-    return new YoungPlantCell(nutrition, species, x, y);
-  }
 }
 
 class OldPlantCell extends Cell {
@@ -71,19 +64,14 @@ class OldPlantCell extends Cell {
   String type() {
     return "oldPlant";
   }
-
-
-  OldPlantCell copy() {
-    return new OldPlantCell(nutrition, species, x, y);
-  }
 }
 
 class DeadPlantCell extends Cell {
   int decompositionTime;
 
-  public DeadPlantCell(float nutrition, int decompositionTime, int x, int y) {
+  public DeadPlantCell(float nutrition, int x, int y) {
     super(nutrition, 0, x, y);
-    this.decompositionTime = decompositionTime;
+    this.decompositionTime = DECOMPOSITION_TIME_MIN + int(random(DECOMPOSITION_TIME_MAX - DECOMPOSITION_TIME_MIN));
   }
 
 
@@ -95,11 +83,6 @@ class DeadPlantCell extends Cell {
 
   String type() {
     return "deadPlant";
-  }
-
-
-  DeadPlantCell copy() {
-    return new DeadPlantCell(nutrition, decompositionTime, x, y);
   }
 }
 
@@ -118,11 +101,6 @@ class RootCell extends Cell {
   String type() {
     return "root";
   }
-
-
-  RootCell copy() {
-    return new RootCell(nutrition, species, x, y);
-  }
 }
 
 class FlowerCell extends Cell {
@@ -140,11 +118,6 @@ class FlowerCell extends Cell {
   String type() {
     return "flower";
   }
-
-
-  FlowerCell copy() {
-    return new FlowerCell(nutrition, species, x, y);
-  }
 }
 
 class PetalCell extends Cell {
@@ -154,27 +127,13 @@ class PetalCell extends Cell {
 
 
   void display(int x, int y) {
-    if (species == 0)
-      fill(243, 243, 243);
-    else if (species == 1)
-      fill(153, 0, 255);
-    else if (species == 2)
-      fill(210, 173, 249);
-    else if (species == 3)
-      fill(251, 255, 12);
-    else
-      fill(255, 193, 119);
+    fill(PETAL_COLORS[species]);
     rect(x * cellSize, y * cellSize, cellSize, cellSize);
   }
 
 
   String type() {
     return "petal";
-  }
-
-
-  PetalCell copy() {
-    return new PetalCell(nutrition, species, x, y);
   }
 }
 
@@ -185,27 +144,13 @@ class SeedCell extends Cell {
 
 
   void display(int x, int y) {
-    if (species == 0)
-      fill(107, 86, 62);
-    else if (species == 1)
-      fill(152, 105, 4);
-    else if (species == 2)
-      fill(112, 119, 34);
-    else if (species == 3)
-      fill(122, 113, 59);
-    else
-      fill(148, 89, 41);
+    fill(SEED_COLORS[species]);
     rect(x * cellSize, y * cellSize, cellSize, cellSize);
   }
 
 
   String type() {
     return "seed";
-  }
-
-
-  SeedCell copy() {
-    return new SeedCell(species, x, y);
   }
 }
 
@@ -223,10 +168,5 @@ class SoilCell extends Cell {
 
   String type() {
     return "soil";
-  }
-
-
-  SoilCell copy() {
-    return new SoilCell(nutrition, x, y);
   }
 }

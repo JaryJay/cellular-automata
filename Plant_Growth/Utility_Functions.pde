@@ -33,46 +33,48 @@ int numAirNeighbours(int x, int y) {
   return count;
 }
 
-int numAdjYoungOldPlantCells(int x, int y) {
+int numAdjCellsOfType(int x, int y, String type) {
   int num = 0;
   int j = x-1, i = y;
-  if (isPlantCell(j, i))
+  if (isType(j, i, type))
     num++;
 
   j = x+1;
-  if (isPlantCell(j, i))
+  if (isType(j, i, type))
     num++;
 
   j = x;
   i = y-1;
-  if (isPlantCell(j, i))
+  if (isType(j, i, type))
     num++;
 
   i=y+1;
-  if (isPlantCell(j, i))
+  if (isType(j, i, type))
     num++;
   return num;
 }
 
-int numAdjRootCells(int x, int y) {
-  int num = 0;
+// Returns any adjacent cell of the specified type, or throws an exception
+// if none were found 
+Cell adjCellOfType(int x, int y, String type) {
   int j = x-1, i = y;
-  if (isType(j, i, "root"))
-    num++;
+  if (isType(j, i, type))
+    return cells[i][j];
 
   j = x+1;
-  if (isType(j, i, "root"))
-    num++;
+  if (isType(j, i, type))
+    return cells[i][j];
 
   j = x;
   i = y-1;
-  if (isType(j, i, "root"))
-    num++;
-
+  if (isType(j, i, type))
+    return cells[i][j];
+    
   i=y+1;
-  if (isType(j, i, "root"))
-    num++;
-  return num;
+  if (isType(j, i, type))
+    return cells[i][j];
+    
+  throw new IllegalStateException("No adjacent flower cells.");
 }
 
 List<Cell> adjacentPlantCells(int x, int y) {

@@ -84,14 +84,16 @@ void deathAndDecomposition() {
         Cell c = cells[y][x];
         if (isPlantCell(x, y)) {
           float deathProbability = log(c.age) * DEATH_CONSTANT / (c.nutrition + 0.01);
+          float decompositionProbability = DECOMPOSITION_PROBABILIY;
           if (isType(x, y, "root")) {
             deathProbability = log(c.age) * ROOT_DEATH_CONSTANT / (c.nutrition + 0.01);
           } else if (isType(x, y, "petal")) {
-            deathProbability *= 100;
+            deathProbability *= cells[y][x].age;
+            decompositionProbability = 0;
           }
           if (random(1) < deathProbability) {
-            if (c.nutrition > 30 && random(1) < DECOMPOSITION_PROBABILIY) {
-              cellsNext[y][x] = new DeadPlantCell(c.nutrition, int(120 + random(20)), x, y);
+            if (c.nutrition > 30 && random(1) < decompositionProbability) {
+              cellsNext[y][x] = new DeadPlantCell(c.nutrition, x, y);
             } else {
               cellsNext[y][x] = null;
             }
